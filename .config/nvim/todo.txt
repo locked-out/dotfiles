@@ -1,0 +1,4 @@
+debug cpp
+keymappings
+  debug
+compare with example config https://github.com/NvChad/example_config/

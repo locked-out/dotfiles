@@ -1,0 +1,9 @@
+spell
+ftplugin
+syntax
+coc-settings.json
+.luarc.json
+lazy-lock.json
+after
+.virtualenvs
+**/.DS_Store

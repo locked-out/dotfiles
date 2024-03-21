@@ -1,0 +1,157 @@
+// Modified from https://github.com/linuxmobile/hyprland-dots/tree/Gruvland
+
+
+{
+    "layer": "top",
+    "position": "top",
+    "mod": "dock",
+    "exclusive": true,
+    "passtrough": false,
+    "gtk-layer-shell": true,
+    "height": 0,
+    "modules-left": [
+        // "custom/refresh",
+        "clock",
+        "hyprland/window",
+        // "cpu",
+        // "memory",
+        "custom/weather"
+    ],
+    "modules-center": [
+        "hyprland/workspaces"
+    ],
+    "modules-right": [
+        "bluetooth",
+        "network",
+        "battery",
+        "backlight",
+        "custom/updates",
+        // "custom/language",
+        "pulseaudio",
+        "pulseaudio#microphone"
+    ],
+
+    "bluetooth" : {
+        "on-click" : "~/.config/waybar/scripts/bluetoothtoggle.sh",
+        "on-click-right" : "~/.config/waybar/scripts/bluetoothselect.sh",
+        "format": " {status}",
+        // "format-connected": " {device_alias}",
+        "format-connected-battery": " {device_alias}",
+        // "format-device-preference": [ "device1", "device2" ], // preference list deciding the displayed device
+        "tooltip-format": "{num_connections} connected",
+        "tooltip-format-connected": "{num_connections} connected\n\n{device_enumerate}",
+        "tooltip-format-enumerate-connected": "{device_alias}",
+        "tooltip-format-enumerate-connected-battery": "{device_alias}\t{device_battery_percentage}%"
+    },
+
+    "hyprland/window": {
+        "format": ""
+    },
+    "hyprland/workspaces": {
+        "on-scroll-up": "hyprctl dispatch workspace e+1",
+        "on-scroll-down": "hyprctl dispatch workspace e-1",
+        "all-outputs": true,
+        "on-click": "activate",
+        "format": "{name}",
+        "format-icons": {
+            "1": "",
+            "2": "",
+            "3": "",
+            "4": "",
+            "5": "",
+            "urgent": "",
+            "active": "",
+            "default": ""
+          }
+    },
+    "custom/refresh": {
+      "format": "",
+      "on-click": "~/.config/waybar/scripts/barrefresh.sh"
+    },
+    "custom/updates": {
+        "exec": "~/.config/waybar/scripts/getupdates.sh",
+        "interval": 7200,
+        "format": "{}"
+    },
+    "custom/weather" : {
+        "tooltip" : true,
+        "format" : "{}",
+        "restart-interval" : 300,
+        "exec" : "~/.config/waybar/scripts/waybar-wttr.py",
+        "return-type" : "json"
+    },
+    "battery" : {
+        "format" : "{icon} {capacity}%",
+        "format-charging": "{icon}󱐋 {capacity}%",
+        "format-full" : "󰁹 Full",
+        "format-icons" : ["󰂎","󰁺","󰁻","󰁼","󰁽","󰁾","󰁿","󰂀","󰂁","󰂂","󰁹"]
+    },
+    "network" : {
+        "on-click" : "~/.config/waybar/scripts/wifiselect.sh",
+        "format": "{ifname}",
+        "format-wifi": " {essid}",
+        "format-ethernet": "󰈀 {ipaddr}/{cidr} ",
+        "format-disconnected": "󰪎 Disconnected", //An empty format will hide the module.
+        "tooltip-format": "󰈀 {ifname} via {gwaddr}",
+        "tooltip-format-wifi": " {essid} ({signalStrength}%)",
+        "tooltip-format-ethernet": " {ifname}",
+        "tooltip-format-disconnected": "Disconnected"
+    },
+    "backlight" : {
+      "format" : "{icon} {percent}%",
+      "format-icons" : ["󰛩","󱩎", "󱩏", "󱩐", "󱩑", "󱩒", "󱩓", "󱩔", "󱩕", "󱩖", "󰛨"],
+      "on-scroll-up" : "brightnessctl -q set 1%+",
+      "on-scroll-down" : "brightnessctl -q set 1%- --min-value=375" 
+    },
+    "tray": {
+        "icon-size": 13,
+        "tooltip": false,
+        "spacing": 10
+    },
+    "clock": {
+        "format": " {:%I:%M %p   <span> %a, %d %b</span>}",
+        // "format": "{:%I:%M %p  %a %d %b}",
+        "tooltip-format": "<small>{calendar}</small>",
+        "calendar" : {
+            "format" : {
+                "today" : "<span color='white'><u>{}</u></span>"
+            }
+        }
+    },
+    "pulseaudio": {
+        "format": "{icon} {volume}%",
+        "tooltip": false,
+
+        "format-muted": "{icon} Muted",
+        "on-click": "pamixer -t",
+        "on-scroll-up": "pamixer -i 1",
+        "on-scroll-down": "pamixer -d 1",
+        "scroll-step": 5,
+        "format-icons": {
+            "headphone":        "󰋋",
+            "headphone-muted":  "󰟎",
+            "hands-free":       "󰋋",
+            "hands-free-muted": "󰟎",
+            "headset":          "󰋋",
+            "headset-muted":    "󰟎",
+            "phone":            "",
+            "phone-muted":      "󰷯",
+            "portable":         "󰏲",
+            "portable-muted":   "󰷯",
+            "car":              "󰄋",
+            "car-muted":        "󰸜",
+            "default-muted":    "󰸈",
+            "default": ["", "", ""]
+        }
+    },
+    "pulseaudio#microphone": {
+        "format": "{format_source}",
+        "tooltip": false,
+        "format-source": "󰍬 {volume}%",
+        "format-source-muted": "󰍭 Muted",
+        "on-click": "pamixer --default-source -t",
+        "on-scroll-up": "pamixer --default-source -i 1",
+        "on-scroll-down": "pamixer --default-source -d 1",
+        "scroll-step": 5
+    }
+}

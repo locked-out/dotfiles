@@ -1,0 +1,30 @@
+# Inserts a blank line between shell prompts
+add_newline = true
+
+[character] # The name of the module we are configuring is "character"
+success_symbol = "[>](bold green)" # The "success_symbol" segment is being set to "➜" with the color "bold green"
+error_symbol = "[x](bold red)"
+
+[shell]
+fish_indicator = "󰈺"
+unknown_indicator = "mystery shell"
+style = "blue bold"
+disabled = false
+
+[python]
+symbol = " "
+
+[nodejs]
+symbol = " "
+
+[rust]
+symbol = " "
+
+[java]
+symbol = " "
+
+[c]
+symbol = " "
+
+[lua]
+format = "via [ $version](bold blue) "
