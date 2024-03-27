@@ -88,12 +88,18 @@ M.gitsigns = {
       "Preview hunk",
     },
 
-    ["<leader>gd"] = {
+    ["<leader>gt"] = {
       function()
         require("gitsigns").toggle_deleted()
       end,
       "Toggle deleted",
     },
+    ["<leader>gd"] = {
+      function()
+        require("gitsigns").diffthis()
+      end,
+      "Diff this",
+    }
   }
 }
 
