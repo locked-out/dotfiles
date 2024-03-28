@@ -3,6 +3,7 @@
 import json
 import requests
 import datetime
+import bisect
 
 WEATHER_CODES = {
     '113': '☀️',
@@ -123,6 +124,36 @@ data['tooltip'] += f"Feels like: {weather['current_condition'][0]['FeelsLikeC']}
 data['tooltip'] += f"Wind: {weather['current_condition'][0]['windspeedKmph']}Km/h\n"
 data['tooltip'] += f"Humidity: {weather['current_condition'][0]['humidity']}%\n"
 
+
+def temp_to_colour(temperature : int):
+    '''
+    Colours:
+        white
+    7
+        #8aadf4 
+    13
+        #eed49f
+    21
+        #f5a97f
+    27
+        #ee99a0
+    33
+        #ed8796
+    '''
+    breakpoints = [7, 13, 21, 27, 33]
+    colour_bands = [
+        "white",
+        "#8aadf4",
+        "#eed49f",
+        "#f5a97f",
+        "#ee99a0",
+        "#ed8796"
+    ]
+    
+    band_no = bisect.bisect_left(breakpoints, temperature)
+    colour_band = colour_bands[band_no]
+    return colour_band
+
 days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
 
 for i, day in enumerate(weather['weather']):
@@ -135,8 +166,8 @@ for i, day in enumerate(weather['weather']):
     
 
     data['tooltip'] += f"{days[thisdate.weekday()]}</b> "
-    data['tooltip'] += format_span(f"{day['maxtempC']}° ", weight="bold", color="#fab387")
-    data['tooltip'] += format_span(f"{day['mintempC']}° ", weight="bold", color="#89b4fa")
+    data['tooltip'] += format_span(f"{day['mintempC']}° ", weight="bold", color=temp_to_colour(int(day['mintempC'])))
+    data['tooltip'] += format_span(f"{day['maxtempC']}° ", weight="bold", color=temp_to_colour(int(day['maxtempC'])))
     # data['tooltip'] += f"🌅 {day['astronomy'][0]['sunrise']} 🌇 {day['astronomy'][0]['sunset']}"
     data['tooltip'] += "\n"
     for hour in day['hourly']:
@@ -144,7 +175,9 @@ for i, day in enumerate(weather['weather']):
         if i == 0:
             if int(hour['time'])/100 < datetime.datetime.now().hour-2:
                 blackout = True
-        line = f"{format_time(hour['time'])} {WEATHER_CODES[hour['weatherCode']]} {format_temp(hour['FeelsLikeC'])} {hour['weatherDesc'][0]['value']}"
+      
+        hour_temp = hour['FeelsLikeC']
+        line = f"{format_time(hour['time'])} {WEATHER_CODES[hour['weatherCode']]} {format_span(format_temp(hour_temp), color=temp_to_colour(int(hour_temp)))} {hour['weatherDesc'][0]['value']}"
         chances = format_chances(hour)
         if chances:
             styling = {"style":"italic"}
