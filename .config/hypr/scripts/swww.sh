@@ -3,7 +3,7 @@
 # Check swww daemon
 swww query
 if [ $? -eq 1 ] ; then
-    swww init
+    swww-daemon &
 fi
 swww img ~/.config/hypr/background.jpg
 
