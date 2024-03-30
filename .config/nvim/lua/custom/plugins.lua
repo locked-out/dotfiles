@@ -44,18 +44,22 @@ local plugins = {
   {
     'mfussenegger/nvim-dap',
     config = function ()
+      dofile(vim.g.base46_cache .. "dap")
       require "custom.configs.dapconfig"
     end,
-    -- lazy=false,
+    lazy=false,
   },
-  -- {
-  --   "rcarriga/nvim-dap-ui",
-  --   dependencies='mfussenegger/nvim-dap',
-  --   lazy=false,
-  --   config = function()
-  --     require("dapui").setup()
-  --   end
-  -- },
+  {
+    "rcarriga/nvim-dap-ui",
+    dependencies={
+      'mfussenegger/nvim-dap',
+      'nvim-neotest/nvim-nio',
+    },
+    lazy=false,
+    config = function()
+      require("dapui").setup()
+    end
+  },
   {
     'nvimdev/dashboard-nvim',
     event = 'VimEnter',
@@ -65,6 +69,17 @@ local plugins = {
     end,
     dependencies = { {'nvim-tree/nvim-web-devicons'}, {"nvim-treesitter/nvim-treesitter"}}
   },
+  {
+    'theHamsta/nvim-dap-virtual-text',
+    dependencies={
+      'mfussenegger/nvim-dap',
+      'nvim-treesitter/nvim-treesitter'
+    },
+    config = function()
+      require("nvim-dap-virtual-text").setup({['only_first_definition']=false})
+    end,
+    lazy=false,
+  }
 }
 
 return plugins
