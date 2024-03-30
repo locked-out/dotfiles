@@ -226,5 +226,59 @@ M.lspconfig = {
   },
 }
 
+local dap_nv_mappings = {
+  ["<Leader>dh"] = {
+    function() require("dap.ui.widgets").hover() end,
+    "Debug hover"
+  },
+  ["<Leader>dp"] = {
+    function() require("dap.ui.widgets").preview() end,
+    "Debug preview"
+  }
+}
+
+M.dap = {
+  n = {
+    ["<leader>dt"] = {
+      function() require("dapui").toggle() end,
+      "Debug UI toggle",
+    },
+    ["<leader>db"] = {
+      function() require("dap").toggle_breakpoint() end,
+      "Debug toggle breakpoint"
+    },
+    ["<F5>"] = {
+      function() require("dap").continue() end,
+      "Debug continue",
+    },
+    ["<F10>"] = {
+      function() require("dap").step_over() end,
+      "Debug step over",
+    },
+    ["<F11>"] = {
+      function() require("dap").step_into() end,
+      "Debug step into",
+    },
+    ["<F12>"] = {
+      function() require("dap").step_out() end,
+      "Debug step out",
+    },
+    -- ["<Leader>dp"] = {
+    --   function() require("dap").set_breakpoint(nil, nil, vim.fn.input('Log point message: ')) end,
+    --   "Debug log point"
+    -- },
+    ['<Leader>df'] = {
+      function()
+        local widgets = require('dap.ui.widgets')
+        widgets.centered_float(widgets.frames)
+      end,
+      "Debug frames"
+    },
+  },
+  v = {}
+}
+
+M.dap.n = vim.tbl_deep_extend('keep', M.dap.n, dap_nv_mappings)
+M.dap.v = vim.tbl_deep_extend('keep', M.dap.v, dap_nv_mappings)
 
 return M

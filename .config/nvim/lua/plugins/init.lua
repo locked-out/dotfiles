@@ -267,7 +267,8 @@ local default_plugins = {
         n = {name = "linenum"},
         N = {name = "NvChad"},
         w = {name = "whichkey"},
-        l = {name = "LSP"}
+        l = {name = "lSP"},
+        d = {name = "debug"}
       }, { prefix = "<leader>" })
     end,
   },
