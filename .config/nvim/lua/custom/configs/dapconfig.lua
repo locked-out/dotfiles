@@ -75,9 +75,11 @@ dap.configurations.python = {
 
 dap.listeners.before.attach.dapui_config = function()
   require("dapui").open()
+  require("nvim-dap-virtual-text")
 end
 dap.listeners.before.launch.dapui_config = function()
   require("dapui").open()
+  require("nvim-dap-virtual-text")
 end
 dap.listeners.before.event_terminated.dapui_config = function()
   require("dapui").close()
@@ -85,7 +87,3 @@ end
 dap.listeners.before.event_exited.dapui_config = function()
   require("dapui").close()
 end
-
--- local widgets = require('dap.ui.widgets')
--- local my_sidebar = widgets.sidebar(widgets.scopes)
--- my_sidebar.open()
