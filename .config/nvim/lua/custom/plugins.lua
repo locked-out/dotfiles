@@ -47,7 +47,6 @@ local plugins = {
       dofile(vim.g.base46_cache .. "dap")
       require "custom.configs.dapconfig"
     end,
-    lazy=false,
   },
   {
     "rcarriga/nvim-dap-ui",
@@ -55,7 +54,6 @@ local plugins = {
       'mfussenegger/nvim-dap',
       'nvim-neotest/nvim-nio',
     },
-    lazy=false,
     config = function()
       require("dapui").setup()
     end
@@ -78,7 +76,6 @@ local plugins = {
     config = function()
       require("nvim-dap-virtual-text").setup({['only_first_definition']=false})
     end,
-    lazy=false,
   }
 }
 

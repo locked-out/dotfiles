@@ -239,7 +239,7 @@ local dap_nv_mappings = {
 
 M.dap = {
   n = {
-    ["<leader>dt"] = {
+    ["<leader>du"] = {
       function() require("dapui").toggle() end,
       "Debug UI toggle",
     },
@@ -274,6 +274,10 @@ M.dap = {
       end,
       "Debug frames"
     },
+    ["<Leader>dt"] = {
+      function() require("dap").terminate() end,
+      "Debug terminate",
+    }
   },
   v = {}
 }
