@@ -76,7 +76,8 @@ local plugins = {
     config = function()
       require("nvim-dap-virtual-text").setup({['only_first_definition']=false})
     end,
-  }
+  },
+  {'akinsho/git-conflict.nvim', version = "*", config = true, lazy=false},
 }
 
 return plugins
