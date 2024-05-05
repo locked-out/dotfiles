@@ -77,7 +77,21 @@ local plugins = {
       require("nvim-dap-virtual-text").setup({['only_first_definition']=false})
     end,
   },
-  {'akinsho/git-conflict.nvim', version = "*", config = true, lazy=false},
+  {
+    'akinsho/git-conflict.nvim',
+    version = "*",
+    config = function (_, opts)
+      dofile(vim.g.base46_cache .. "git")
+      require('git-conflict').setup(opts);
+    end,
+    opts = {
+      disable_diagnostics = true,
+      default_mappings = false
+    },
+    event = {
+      "BufRead"
+    }
+  },
 }
 
 return plugins

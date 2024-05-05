@@ -87,19 +87,23 @@ M.gitsigns = {
       end,
       "Preview hunk",
     },
-
-    ["<leader>gt"] = {
-      function()
-        require("gitsigns").toggle_deleted()
-      end,
-      "Toggle deleted",
-    },
     ["<leader>gd"] = {
       function()
         require("gitsigns").diffthis()
       end,
       "Diff this",
     }
+  }
+}
+
+M.gitconflicts = {
+  n = {
+    ["<leader>gt"] = {"<cmd> GitConflictChooseTheirs <CR>", "Choose theirs"},
+    ["<leader>go"] = {"<cmd> GitConflictChooseOurs <CR>", "Choose ours"},
+    ["<leader>ga"] = {"<cmd> GitConflictChooseBoth <CR>", "Choose both"},
+    ["<leader>g0"] = {"<cmd> GitConflictChooseNone <CR>", "Choose none"},
+    ["]x"] = {"<cmd> GitConflictNextConflict <CR>", "Next conflict"},
+    ["[x"] = {"<cmd> GitConflictPrevConflict <CR>", "Previous conflict"},
   }
 }
 
