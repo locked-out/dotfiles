@@ -2,7 +2,7 @@
 
 state=`bluetoothctl show | grep Powered | awk '{print $2}'`
 if [[ $state == 'yes' ]]; then    
-  devices=`bluetoothctl devices Trusted` 
+  devices=`bluetoothctl devices Paired` 
 
   selection=`cut -d ' ' -f "3-" <<< "$devices" | wofi -i --dmenu`
   selection=`grep "$selection" <<< "$devices" | cut -d ' ' -f 2`
