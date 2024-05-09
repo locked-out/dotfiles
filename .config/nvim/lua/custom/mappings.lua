@@ -227,6 +227,18 @@ M.lspconfig = {
       end,
       "LSP formatting",
     },
+    ["[d"] = {
+      function()
+        vim.diagnostic.goto_prev { float = { border = "rounded" } }
+      end,
+      "Prev diagnostic",
+    },
+    ["]d"] = {
+      function()
+        vim.diagnostic.goto_next { float = { border = "rounded" } }
+      end,
+      "Next diagnostic",
+    },
   },
 }
 
