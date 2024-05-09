@@ -94,7 +94,17 @@ local plugins = {
   },
   {
     "aznhe21/actions-preview.nvim"
-  }
+  },
+  {
+    'echasnovski/mini.surround', version = '*', event='VeryLazy',
+    init = function ()
+      -- Disabling [s] for use in mini.surround
+      vim.keymap.set({ 'n', 'x' }, 's', '<Nop>')
+    end,
+    config = function(_, opts)
+      require('mini.surround').setup(opts)
+    end
+  },
 }
 
 return plugins
