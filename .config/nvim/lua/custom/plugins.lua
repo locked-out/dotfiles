@@ -92,6 +92,9 @@ local plugins = {
       "BufRead"
     }
   },
+  {
+    "aznhe21/actions-preview.nvim"
+  }
 }
 
 return plugins
