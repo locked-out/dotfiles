@@ -16,7 +16,7 @@ case $op in
                 systemctl $op
                 ;;
         lock)
-                ~/.config/hypr/scripts/lock.sh
+                hyprlock
                 ;;
         logout)
                 hyprctl dispatch exit
