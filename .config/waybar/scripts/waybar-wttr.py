@@ -4,6 +4,7 @@ import json
 import requests
 import datetime
 import bisect
+import textwrap
 
 WEATHER_CODES = {
     '113': '☀️',
@@ -88,7 +89,7 @@ def format_time(time : str):
 
 
 def format_temp(temp : str):
-    return (temp+"°").ljust(3)
+    return (temp+"°").rjust(3)
 
 
 def format_chances(hour : dict):
@@ -115,9 +116,77 @@ def format_span(string:str, **kwargs):
     style = " ".join(f"{k}='{v}'" for k, v in kwargs.items())
     return f"<span {style}>{string}</span>"
 
+def hex_to_colours(hex : str) -> list[int]:
+    colours = textwrap.wrap(hex[1::], 2)
+    return [int(i, 16) for i in colours]
+def colours_to_hex(colours : list[int]) -> str:
+    s = "#" + "".join([f'{i:x}' for i in colours])
+    return s
+    
+def colour_blend(from_colour : str, to_colour : str, ratio : float) -> str:
+    from_colours = hex_to_colours(from_colour)
+    to_colours = hex_to_colours(to_colour)
 
+    blended_colours = []
+
+    for from_channel, to_channel in zip(from_colours, to_colours):
+        blended_channel = int(from_channel + (to_channel - from_channel) * ratio)
+        blended_colours.append(blended_channel)
+
+    return colours_to_hex(blended_colours)
+
+def temp_to_colour(temperature : int):
+    '''
+    Colours:
+    6   white
+    9   #b4befe
+    12  #8aadf4 
+    15  #74c7ec 	
+    17  #89dceb
+    19  #94e2d5
+    23  #a6e3a1
+    25  #f9e2af
+    27  #fab387
+ 	30  #eba0ac
+ 	35  #f38ba8 	
+    '''
+    keyframes = [6,9,12,15,17,19,23,25,27,30,35]
+    colour_bands = [
+        "#ffffff",
+        "#b4befe",
+        "#8aadf4",
+        "#74c7ec",	
+        "#89dceb",
+        "#94e2d5",
+        "#a6e3a1",
+        "#f9e2af",
+        "#fab387",
+ 	    "#eba0ac",
+ 	    "#f38ba8"	
+    ]
+    if temperature <= keyframes[0]:
+        return colour_bands[0]
+    if temperature >= keyframes[-1]:
+        return colour_bands[-1]
+
+    # Will return the index where temperature could be correctly inserted in the sorted keyframes
+    # keyframes[index] < temperature where index ∈ [0, band_no) 
+    band_no = bisect.bisect_left(keyframes, temperature)
+
+    # Check the temperature doesnt match a keyframe
+    if temperature == keyframes[band_no]:
+        return colour_bands[band_no]
+
+    # The two relevant keyframes are located at `band_no - 1` and `band_no`
+
+    ratio = (temperature - keyframes[band_no-1])/(keyframes[band_no]-keyframes[band_no-1])
+    colour = colour_blend(colour_bands[band_no-1], colour_bands[band_no], ratio)
+
+    return colour
+
+now_temp = weather['current_condition'][0]['FeelsLikeC']
 data['text'] = WEATHER_CODES[weather['current_condition'][0]['weatherCode']] + \
-    " "+weather['current_condition'][0]['FeelsLikeC']+"°C"
+    " "+ format_span(now_temp+"°C", color=temp_to_colour(int(now_temp)), weight="bold")
 
 data['tooltip'] = f"<b>{weather['current_condition'][0]['weatherDesc'][0]['value']} {weather['current_condition'][0]['temp_C']}°C</b>\n"
 data['tooltip'] += f"Feels like: {weather['current_condition'][0]['FeelsLikeC']}°C\n"
@@ -125,34 +194,6 @@ data['tooltip'] += f"Wind: {weather['current_condition'][0]['windspeedKmph']}Km/
 data['tooltip'] += f"Humidity: {weather['current_condition'][0]['humidity']}%\n"
 
 
-def temp_to_colour(temperature : int):
-    '''
-    Colours:
-        white
-    7
-        #8aadf4 
-    13
-        #eed49f
-    21
-        #f5a97f
-    27
-        #ee99a0
-    33
-        #ed8796
-    '''
-    breakpoints = [7, 13, 21, 27, 33]
-    colour_bands = [
-        "white",
-        "#8aadf4",
-        "#eed49f",
-        "#f5a97f",
-        "#ee99a0",
-        "#ed8796"
-    ]
-    
-    band_no = bisect.bisect_left(breakpoints, temperature)
-    colour_band = colour_bands[band_no]
-    return colour_band
 
 days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
 
