@@ -16,7 +16,7 @@ case $op in
                 systemctl $op
                 ;;
         lock)
-                hyprlock
+                loginctl lock-session
                 ;;
         logout)
                 hyprctl dispatch exit
