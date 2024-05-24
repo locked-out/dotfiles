@@ -17,6 +17,9 @@ if status is-interactive
   set -xU MANPAGER 'less -R --use-color -Dd+b -Du+c'
   set -xU MANROFFOPT '-P -c'
 
+  # vi mode
+  fish_vi_key_bindings
+
   starship init fish | source
 end
 
