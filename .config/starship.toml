@@ -1,9 +1,17 @@
 # Inserts a blank line between shell prompts
 add_newline = true
 
-[character] # The name of the module we are configuring is "character"
-success_symbol = "[>](bold green)" # The "success_symbol" segment is being set to "➜" with the color "bold green"
+format = "$all[>](bold green) "
+right_format = "$character"
+
+# This is hacky
+[character]
+success_symbol = ""
 error_symbol = "[x](bold red)"
+vimcmd_symbol = "[ NORMAL ](bold inverted fg:#8bc2f0)"
+vimcmd_replace_one_symbol = "[ REPLACE ](bold inverted fg:#f8bd96)"
+vimcmd_replace_symbol = "[ REPLACE ](bold inverted fg:#f8bd96)"
+vimcmd_visual_symbol = "[ VISUAL ](bold inverted fg:#89dceb)"
 
 [shell]
 fish_indicator = "󰈺"
