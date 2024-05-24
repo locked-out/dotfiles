@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # connections=`nmcli connection show --active | grep -v ' loopback ' | tail -n +2 | count`
-networks=`nmcli device wifi list --rescan yes | ~/.config/waybar/scripts/readwifitable.py BARS SSID | grep -ve '--$'` 
+networks=`nmcli device wifi list --rescan yes | ~/.config/waybar/scripts/readwifitable.py --no-duplicates BARS SSID | grep -ve '--$'` 
 
 selection=`wofi -im --dmenu <<< "$networks" | cut -f 2`
 
