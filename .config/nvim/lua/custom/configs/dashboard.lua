@@ -46,7 +46,7 @@ M.config = {
     {
       desc = ' dotfiles',
       group = 'Number',
-      action = 'cd ~/.config/ | enew | NvimTreeToggle',
+      action = 'cd ~/dotfiles/.config/ | enew | NvimTreeToggle',
       key = 'd',
     },
   },
