@@ -9,7 +9,6 @@ def main():
     for arg in sys.argv[1:]:
         if arg == "--no-duplicates":
             skip_duplicates = True
-            continue
         else:
             wanted_columns.append(arg.upper())
 
