@@ -3,7 +3,15 @@
 import sys
 
 def main():
-    wanted_columns = list(map(lambda x: x.upper(), sys.argv[1:]))
+    skip_duplicates = False
+    wanted_columns = []
+    
+    for arg in sys.argv[1:]:
+        if arg == "--no-duplicates":
+            skip_duplicates = True
+        else:
+            wanted_columns.append(arg.upper())
+
 
     firstline = sys.stdin.readline()
     l = firstline
@@ -22,7 +30,14 @@ def main():
         "▂▄▆█" : "<span color ='#a6e3a1'>▂▄▆█</span>",
     }
 
+    seen_ssid = set()
     for line in sys.stdin:
+        if skip_duplicates:
+            ssid = line[l["SSID"][0]:l["SSID"][1]].rstrip()
+            
+            if ssid in seen_ssid:
+                continue
+            seen_ssid.add(ssid)
 
         entries = [] 
         for col in wanted_columns:
@@ -32,7 +47,6 @@ def main():
             entries.append(val)
 
         print("\t".join(entries))
-
 
 if __name__ == "__main__":
     main()
