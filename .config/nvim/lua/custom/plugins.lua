@@ -93,7 +93,18 @@ local plugins = {
     }
   },
   {
-    "aznhe21/actions-preview.nvim"
+    "aznhe21/actions-preview.nvim",
+    opts = {
+      telescope = {
+        layout_strategy = 'vertical',
+        layout_config = {
+          vertical = {
+            preview_cutoff = 0,
+            preview_height = 0.5
+          },
+        },
+      }
+    }
   },
   {
     'echasnovski/mini.surround', version = '*', event='VeryLazy',
