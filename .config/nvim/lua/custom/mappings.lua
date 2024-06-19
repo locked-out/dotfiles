@@ -115,6 +115,7 @@ M.telescope = {
 
     -- pick a hidden term
     ["<leader>ft"] = { "<cmd> Telescope terms <CR>", "Pick hidden term" },
+    ["<leader>fs"] = { "<cmd> Telescope lsp_document_symbols <CR>", "Document symbols"},
 
     -- theme switcher
     -- ["<leader>th"] = { "<cmd> Telescope themes <CR>", "Nvchad themes" },
