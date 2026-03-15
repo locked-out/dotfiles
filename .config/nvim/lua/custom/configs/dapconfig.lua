@@ -7,6 +7,15 @@ dap.adapters.gdb = {
   args = {"-q", "-i", "dap" }
 }
 
+dap.adapters.codelldb = {
+  type = 'server',
+  port = "${port}",
+  executable = {
+    command = '/usr/bin/codelldb',
+    args = {"--port", "${port}"},
+  }
+}
+
 dap.configurations.c = {
   {
     name = "Launch",
@@ -19,6 +28,21 @@ dap.configurations.c = {
   },
 }
 dap.configurations.cpp = dap.configurations.c
+
+-- Rust
+dap.configurations.rust = {
+  {
+    name = "Rust debug",
+    type = "gdb",
+    request = "launch",
+    program = function()
+      return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/target/debug/', 'file')
+    end,
+    cwd = '${workspaceFolder}',
+    stopOnEntry = true,
+    showDisassembly = "never",
+  },
+}
 
 -- Python
 dap.adapters.python = function(cb, config)

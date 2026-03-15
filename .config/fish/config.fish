@@ -18,7 +18,7 @@ if status is-interactive
   set -xU MANROFFOPT '-P -c'
 
   # vi mode
-  fish_vi_key_bindings
+  set --global fish_key_bindings fish_vi_key_bindings
 
   starship init fish | source
 end

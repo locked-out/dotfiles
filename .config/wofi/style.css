@@ -93,6 +93,7 @@ window {
   margin: 5px;
   padding: 10px;
   border: none;
+  box-shadow: none;
   color: @accent;
   background-color: @bg2;
   animation: fadeIn 0.5s ease-in-out both;
